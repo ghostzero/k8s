@@ -6,14 +6,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
+    - uses: ghostzero/docker-build-push@v5
+      name: Build & push Docker image
+      with:
+        image: ghostzero/laravel
+        tags: latest
+        registry: registry.dev.own3d.tv
+        dockerfile: Dockerfile.ci
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
     - name: deploy to cluster
-      uses: steebchen/kubectl@master
+      uses: ghostzero/kubectl@master
       env:
         KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
       with:
         args: apply -f hello.yml
     - name: verify deployment
-      uses: steebchen/kubectl@master
+      uses: ghostzero/kubectl@master
       env:
         KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
       with:
