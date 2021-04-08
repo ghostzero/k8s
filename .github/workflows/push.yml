@@ -6,15 +6,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
-    - uses: ghostzero/docker-build-push@v5
-      name: Build & push Docker image
+    - name: Login to GitHub Container Registry
+      uses: docker/login-action@v1
       with:
-        image: ghostzero/laravel
-        tags: latest
         registry: registry.dev.own3d.tv
-        dockerfile: Dockerfile.ci
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
+    - name: Build and push
+      uses: docker/build-push-action@v2
+      with:
+        context: ./sailor/php/8.0/
+        platforms: linux/amd64,linux/arm64
+        push: true
+        tags: |
+          ghostzero/k8s:latest
     - name: deploy to cluster
       uses: ghostzero/kubectl@master
       env:

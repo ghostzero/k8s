@@ -32,7 +32,7 @@ spec:
     spec:
       containers:
       - name: hello-world
-        image: registry.dev.own3d.tv/own3dpro/laravel:c09bcaa
+        image: registry.dev.own3d.tv/ghostzero/k8s:latest
         ports:
         - containerPort: 80
       imagePullSecrets:
