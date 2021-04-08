@@ -20,8 +20,11 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         context: ./sailor/php/8.0/
-        platforms: linux/amd64,linux/arm64
+        platforms: linux/amd64
         push: true
+        build-args: |
+          WWWGROUP=1000
+          CICD_GIT_COMMIT=${GITHUB_SHA:7}
         tags: |
           ghostzero/k8s:latest
     - name: deploy to cluster
