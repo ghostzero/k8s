@@ -26,7 +26,7 @@ jobs:
           WWWGROUP=1000
           CICD_GIT_COMMIT=${GITHUB_SHA:7}
         tags: |
-          ghostzero/k8s:latest
+          registry.dev.own3d.tv/ghostzero/k8s:latest
     - name: deploy to cluster
       uses: ghostzero/kubectl@master
       env:
