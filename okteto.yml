@@ -8,7 +8,7 @@ spec:
   type: LoadBalancer
   ports:
   - port: 80
-    targetPort: 80
+    targetPort: 8000
     protocol: TCP
     name: http
   selector:
@@ -34,6 +34,6 @@ spec:
       - name: hello-world
         image: registry.dev.own3d.tv/ghostzero/k8s:latest
         ports:
-        - containerPort: 80
+        - containerPort: 8000
       imagePullSecrets:
         - name: own3d
