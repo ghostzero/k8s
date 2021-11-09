@@ -6,39 +6,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
-    - name: Set up QEMU
-      uses: docker/setup-qemu-action@v1
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v1
-    - name: Login to OWN3D Container Registry
-      uses: docker/login-action@v1
-      with:
-        registry: registry.dev.own3d.tv
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
-    - name: Build and push ghostzero/sailor
-      uses: docker/build-push-action@v2
-      with:
-        context: ./sailor/php/8.0/
-        platforms: linux/amd64
-        push: true
-        build-args: |
-          WWWGROUP=1000
-          CICD_GIT_COMMIT=${GITHUB_SHA:7}
-        tags: |
-          registry.dev.own3d.tv/ghostzero/sailor:latest
-    - name: Build and push hello-world app
-      uses: docker/build-push-action@v2
-      with:
-        context: .
-        file: ./build/Dockerfile
-        platforms: linux/amd64
-        push: true
-        build-args: |
-          WWWGROUP=1000
-          CICD_GIT_COMMIT=${GITHUB_SHA:7}
-        tags: |
-          registry.dev.own3d.tv/ghostzero/k8s:latest
     - name: deploy to cluster
       uses: ghostzero/kubectl@v1
       env:
