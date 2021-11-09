@@ -40,14 +40,8 @@ jobs:
         tags: |
           registry.dev.own3d.tv/ghostzero/k8s:latest
     - name: deploy to cluster
-      uses: ghostzero/kubectl@master
-      env:
-        KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
-      with:
-        args: apply -f okteto.yml
-    - name: verify deployment
       uses: ghostzero/kubectl@v1
       env:
         KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
       with:
-        args: rollout status deployment/hello-world-deployment"
+        args: apply -f okteto.yml
